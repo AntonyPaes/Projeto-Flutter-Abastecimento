@@ -1,27 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
+import 'repositories/auth_repository.dart';
+import 'viewmodels/auth_viewmodel.dart';
+import 'auth_gate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<AuthRepository>(create: (_) => AuthRepository()),
+        ChangeNotifierProvider<AuthViewModel>(
+          create: (context) =>
+              AuthViewModel(authRepository: context.read<AuthRepository>()),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  // Ou StatefulWidget
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Retorne seu MaterialApp ou CupertinoApp aqui
     return MaterialApp(
-      title: 'Projeto Abastecimento',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Meu App')),
-        body: const Center(child: Text('Funciona!')),
-      ),
+      title: 'App Combustivel com Firebase',
+      debugShowCheckedModeBanner: false,
+      home: const AuthGate(),
     );
   }
 }
