@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "60453789113",
+    "project_id": "combustivel-2d1b3",
+    "storage_bucket": "combustivel-2d1b3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60453789113:android:12e1b0df7a117a86d4aa68",
+        "android_client_info": {
+          "package_name": "com.example.projeto_abastecimento"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2Y-Wx-7UvoewSBQBGSmUqH6GCWDPUnig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
