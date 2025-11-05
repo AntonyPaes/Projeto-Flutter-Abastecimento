@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
-import 'screens/home_screen.dart';
+import 'screens/vehicle_list_screen.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -12,8 +12,9 @@ class AuthGate extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const HomeScreen();
+          return const VehicleListScreen();
         }
+
         return const LoginScreen();
       },
     );
