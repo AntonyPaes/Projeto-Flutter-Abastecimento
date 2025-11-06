@@ -4,6 +4,7 @@ import '../models/vehicle_model.dart';
 import '../viewmodels/auth_viewmodel.dart';
 import '../viewmodels/vehicle_viewmodel.dart';
 import 'add_edit_vehicle_screen.dart';
+import 'supply_list_screen.dart';
 
 class VehicleListScreen extends StatelessWidget {
   const VehicleListScreen({super.key});
@@ -30,6 +31,7 @@ class VehicleListScreen extends StatelessWidget {
         itemCount: vehicles.length,
         itemBuilder: (context, index) {
           final vehicle = vehicles[index];
+
           return Dismissible(
             key: Key(vehicle.id ?? index.toString()),
             direction: DismissDirection.endToStart,
@@ -50,15 +52,28 @@ class VehicleListScreen extends StatelessWidget {
             child: ListTile(
               title: Text('${vehicle.marca} ${vehicle.modelo}'),
               subtitle: Text('Placa: ${vehicle.placa} - Ano: ${vehicle.ano}'),
+
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        AddEditVehicleScreen(vehicle: vehicle),
+                    builder: (context) => SupplyListScreen(vehicle: vehicle),
                   ),
                 );
               },
+
+              trailing: IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          AddEditVehicleScreen(vehicle: vehicle),
+                    ),
+                  );
+                },
+              ),
             ),
           );
         },
