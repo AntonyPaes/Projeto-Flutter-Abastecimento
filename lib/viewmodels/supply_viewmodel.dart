@@ -1,12 +1,37 @@
 import 'package:flutter/material.dart';
 import '../models/supply_model.dart';
 import '../repositories/supply_repository.dart';
+import 'dart:async'; 
 
 class SupplyViewModel extends ChangeNotifier {
   final SupplyRepository _repository;
+  StreamSubscription<List<Supply>>? _allSuppliesSubscription;
+  List<Supply> _allSupplies = [];
+  List<Supply> get allSupplies => _allSupplies;
 
   SupplyViewModel({required SupplyRepository repository})
-    : _repository = repository;
+    : _repository = repository {
+    _listenToAllSupplies();
+  }
+
+  void _listenToAllSupplies() {
+    _allSuppliesSubscription?.cancel();
+    _allSuppliesSubscription = _repository.getAllSuppliesByUser().listen(
+      (supplies) {
+        _allSupplies = supplies;
+        notifyListeners();
+      },
+      onError: (error) {
+        _setError('Erro ao carregar histórico: $error');
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _allSuppliesSubscription?.cancel();
+    super.dispose();
+  }
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
